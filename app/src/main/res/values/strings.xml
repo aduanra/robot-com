@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Radiocommande Robot</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="title_radiocommande">Radiocommande</string>
+    <string name="title_configuration">Configuration</string>
+    <string name="title_infos_robot">Robot</string>
+
+</resources>
