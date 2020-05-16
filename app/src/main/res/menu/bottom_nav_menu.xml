@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+            android:id="@+id/navigation_radiocommande"
+            android:icon="@drawable/ic_gamepad_black_24dp"
+            android:title="@string/title_radiocommande"/>
+
+    <item
+            android:id="@+id/navigation_configuration"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:title="@string/title_configuration"/>
+
+    <item
+            android:id="@+id/navigation_infos_robot"
+            android:icon="@drawable/ic_memory_black_24dp"
+            android:title="@string/title_infos_robot"/>
+
+</menu>
