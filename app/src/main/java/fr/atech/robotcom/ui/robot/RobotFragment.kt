@@ -22,7 +22,7 @@ class RobotFragment : Fragment() {
         robotViewModel =
                 ViewModelProviders.of(this).get(RobotViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_infos_robot, container, false)
-        val textView: TextView = root.findViewById(R.id.text_infos_robot)
+        val textView: TextView = root.findViewById(R.id.text_infos_robot_title)
         robotViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })

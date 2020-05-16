@@ -1,5 +1,7 @@
 package fr.atech.robotcom.reseau;
 
+import android.widget.TextView;
+import fr.atech.robotcom.R;
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
@@ -23,6 +25,9 @@ public class RadioCommandeClientHandler extends IoHandlerAdapter {
 
         final String response = "Message bien reçu !";
         session.write(response);
+
+        TextView receivedText = (TextView) findViewById(R.id.text_radiocommande_log);
+        receivedText.setText("Robot: " + receivedText);
 
 
         // // Get all client sessions

@@ -1,13 +1,23 @@
 <resources>
     <string name="app_name">Radiocommande Robot</string>
+
+    <!-- Ecran Radiocommande -->
+    <string name="title_radiocommande">Radiocommande</string>
     <string name="haut">Haut</string>
     <string name="bas">Bas</string>
     <string name="gauche">Gauche</string>
     <string name="droite">Droite</string>
     <string name="stop">Stop</string>
 
-    <string name="title_radiocommande">Radiocommande</string>
+    <!-- Ecran Configuration -->
     <string name="title_configuration">Configuration</string>
+    <string name="switch_cote_robot">Côté robot</string>
+    <string name="label_ip_robot">IP du robot</string>
+    <string name="bouton_enregistrer">Enregistrer</string>
+
+    <!-- Ecran Robot -->
     <string name="title_infos_robot">Robot</string>
+    <string name="label_log">Log des commandes</string>
+
 
 </resources>
