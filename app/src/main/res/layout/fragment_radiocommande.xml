@@ -19,29 +19,94 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/button_radiocommande" android:text="@string/title_radiocommande"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2" app:layout_constraintHorizontal_bias="0.0"/>
-
+            app:layout_constraintBottom_toTopOf="@id/button_rc_bas" android:text="@string/title_radiocommande"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2" app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintVertical_bias="0.184"/>
     <TextView
             android:id="@+id/text_radiocommande_log"
-            android:text="TextView"
+            android:text="log"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/text_radiocommande"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            />
+            app:layout_constraintHorizontal_bias="0.0" app:layout_constraintVertical_bias="0.033"/>
 
     <Button
-            android:id="@+id/button_radiocommande"
+            android:id="@+id/button_rc_haut"
+            android:text="@string/haut"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/next"
-            app:layout_constraintTop_toBottomOf="@id/text_radiocommande_log"
+
+            app:layout_constraintTop_toBottomOf="@+id/text_radiocommande_log"
+            app:layout_constraintBottom_toTopOf="@+id/button_rc_bas"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+
+    />
+
+    <Button
+            android:id="@+id/button_rc_gauche"
+            android:text="@string/gauche"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintTop_toBottomOf="@+id/button_rc_haut"
+            app:layout_constraintBottom_toTopOf="@+id/button_rc_bas"
+
+            app:layout_constraintRight_toLeftOf="@+id/button_rc_stop"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/button_rc_stop"
+
+            app:layout_constraintHorizontal_bias="0.0"/>
+
+    <Button
+            android:id="@+id/button_rc_stop"
+            android:text="@string/stop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintTop_toBottomOf="@+id/button_rc_haut"
+            app:layout_constraintBottom_toTopOf="@+id/button_rc_bas"
+
+            app:layout_constraintLeft_toRightOf="@id/button_rc_gauche"
+            app:layout_constraintRight_toLeftOf="@+id/button_rc_droite"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+
+    />
+
+    <Button
+            android:id="@+id/button_rc_droite"
+            android:text="@string/droite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintTop_toBottomOf="@+id/button_rc_haut"
+            app:layout_constraintBottom_toTopOf="@+id/button_rc_bas"
+
+            app:layout_constraintLeft_toRightOf="@id/button_rc_stop"
+
+            app:layout_constraintStart_toStartOf="button_rc_stop"
+            app:layout_constraintEnd_toEndOf="parent"
+
+    />
+
+    <Button
+            android:id="@+id/button_rc_bas"
+            android:text="@string/bas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintTop_toBottomOf="@id/button_rc_haut"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+
+    />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -22,7 +22,7 @@ class ConfigurationFragment : Fragment() {
         configurationViewModel =
                 ViewModelProviders.of(this).get(ConfigurationViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_configuration, container, false)
-        val textView: TextView = root.findViewById(R.id.text_configuration)
+        val textView: TextView = root.findViewById(R.id.text_config_titre)
         configurationViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })

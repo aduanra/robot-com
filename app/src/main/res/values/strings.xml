@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">Radiocommande Robot</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
+    <string name="haut">Haut</string>
+    <string name="bas">Bas</string>
+    <string name="gauche">Gauche</string>
+    <string name="droite">Droite</string>
+    <string name="stop">Stop</string>
 
     <string name="title_radiocommande">Radiocommande</string>
     <string name="title_configuration">Configuration</string>
