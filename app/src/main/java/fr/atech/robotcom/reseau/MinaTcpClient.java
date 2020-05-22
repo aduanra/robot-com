@@ -79,7 +79,6 @@ public class MinaTcpClient {
     public class connexionTask extends AsyncTask<Void,Void,Void> {
 
         protected Void doInBackground(Void... Params) {
-
             final SocketAddress socketAddress = new InetSocketAddress(hostname, port);
             final ConnectFuture connFuture = connector.connect(socketAddress);
             connFuture.awaitUninterruptibly();

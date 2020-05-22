@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import fr.atech.robotcom.reseau.MinaTcpClient;
+import fr.atech.robotcom.reseau.NetworkUtils;
 import fr.atech.robotcom.reseau.RadioCommandeClientHandler;
 
 
@@ -21,29 +22,36 @@ public class RadioCommandeViewModel extends ViewModel {
 
     private MinaTcpClient client;
     private RadioCommandeClientHandler tcpClientHandler;
-    private String hostname = "localhost";
+    private String hostname = NetworkUtils.getIPAddress(true);
     private Integer port = null;
 
     private MutableLiveData<String> logContent = new MutableLiveData<>();
+
+    private MutableLiveData<String> lastServerResponse = new MutableLiveData<>();
 
     public RadioCommandeViewModel() {
 
     }
 
     public void initTcpCommunication() {
+
+        if(client!=null) return; // Déjà connecté
+
         // Associe le view model au TCP connexionTask handler pour qu'il puisse l'appeler quand des événement réseau surviennent
         tcpClientHandler = new RadioCommandeClientHandler(this);
 
-        // Démarre le connexionTask TCP
+        // Démarre la connexion TCP
         client = new MinaTcpClient(hostname, port, tcpClientHandler);
+        log("Connecté à " + hostname + ":" + port);
     }
 
-    // Ajoute une ligne au log
+    // Ajoute une ligne au log de la radio commande
     public void log(final String logToDisplay) {
         LOGGER.info("Log rc: " + logToDisplay);
-        logContent.setValue(logContent.getValue() + "\n" + logToDisplay);
+        logContent.postValue(logContent.getValue() + "\n" + logToDisplay);
     }
 
+    // Envoie une commmande au serveur
     public void sendCommand(final String command){
         client.sendMessage(command);
     }
@@ -52,4 +60,11 @@ public class RadioCommandeViewModel extends ViewModel {
         return logContent;
     }
 
+    public void setLastServerResponse(final String serverResponse) {
+        this.lastServerResponse = lastServerResponse;
+    }
+
+    public MutableLiveData<String> getLastServerResponse() {
+        return lastServerResponse;
+    }
 }
