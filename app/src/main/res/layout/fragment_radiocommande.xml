@@ -7,7 +7,6 @@
         android:layout_height="match_parent"
         tools:context=".ui.radiocommande.RadioCommandeFragment">
 
-
     <ScrollView
         android:id="@+id/scroller_rc_log"
         android:layout_width="fill_parent"
@@ -41,6 +40,16 @@
             />
     </ScrollView>
 
+
+    <Button
+        android:id="@+id/button_rc_connect"
+        android:text="@string/connexion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@+id/scroller_rc_log"
+
+        />
 
     <Button
             android:id="@+id/button_rc_haut"

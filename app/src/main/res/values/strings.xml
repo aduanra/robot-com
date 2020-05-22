@@ -3,6 +3,7 @@
 
     <!-- Ecran Radiocommande -->
     <string name="title_radiocommande">Radiocommande</string>
+    <string name="connexion">Connexion</string>
     <string name="haut">Haut</string>
     <string name="bas">Bas</string>
     <string name="gauche">Gauche</string>

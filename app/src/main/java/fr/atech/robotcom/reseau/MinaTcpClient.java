@@ -5,10 +5,12 @@ import org.apache.mina.core.service.IoConnector;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.filter.codec.textline.TextLineCodecFactory;
+import org.apache.mina.filter.logging.LoggingFilter;
 import org.apache.mina.transport.socket.nio.NioSocketConnector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
 
@@ -31,15 +33,26 @@ public class MinaTcpClient {
         if(port!=null) this.port = port;
         if(tcpClientHandler==null) throw new RuntimeException("tcpClientHandler ne peut être null");
 
+        // TEMP: créé le serveur
+        // TODO: cf sur la connectivité réseau: https://openclassrooms.com/fr/courses/2023346-creez-des-applications-pour-android/2028130-la-connectivite-reseau
+
+        try{
+            new MinaTcpServer(null, new RobotServerHandler());
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+
         connectToServer(hostname, port, tcpClientHandler);
     }
 
     private void connectToServer(final String hostname,
                                  final Integer port,
                                  final RadioCommandeClientHandler tcpClientHandler) {
+        LOGGER.info("Préparation de la connexion du client TCP à l'hote " + hostname + " sur le port " + port);
+
         connector = new NioSocketConnector();
 
-        //connector.getFilterChain().addLast( "logger", new LoggingFilter() );
+        connector.getFilterChain().addLast( "logger", new LoggingFilter() );
         connector.getFilterChain().addLast("codec",
                 new ProtocolCodecFilter(new TextLineCodecFactory(StandardCharsets.UTF_8)));
 
@@ -48,7 +61,7 @@ public class MinaTcpClient {
         final ConnectFuture connFuture = connector.connect(new InetSocketAddress(hostname, port));
         connFuture.awaitUninterruptibly();
         session = connFuture.getSession();
-        LOGGER.info("Démarrage du client TCP pour l'hote " + hostname + " sur le port " + port);
+        LOGGER.info("Démarrage du client TCP sur l'hote " + hostname + " sur le port " + port);
     }
 
     public void sendMessage(final Object message) {
