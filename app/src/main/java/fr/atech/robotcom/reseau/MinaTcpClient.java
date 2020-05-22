@@ -1,5 +1,7 @@
 package fr.atech.robotcom.reseau;
 
+import android.os.AsyncTask;
+
 import org.apache.mina.core.future.ConnectFuture;
 import org.apache.mina.core.service.IoConnector;
 import org.apache.mina.core.session.IoSession;
@@ -12,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.net.SocketAddress;
 import java.nio.charset.StandardCharsets;
 
 public class MinaTcpClient {
@@ -37,18 +40,18 @@ public class MinaTcpClient {
         // TODO: cf sur la connectivité réseau: https://openclassrooms.com/fr/courses/2023346-creez-des-applications-pour-android/2028130-la-connectivite-reseau
 
         try{
-            new MinaTcpServer(null, new RobotServerHandler());
+            new MinaTcpServer(this.port, new RobotServerHandler());
         } catch(IOException e) {
             e.printStackTrace();
         }
 
-        connectToServer(hostname, port, tcpClientHandler);
+        connectToServer(hostname, this.port, tcpClientHandler);
     }
 
     private void connectToServer(final String hostname,
                                  final Integer port,
                                  final RadioCommandeClientHandler tcpClientHandler) {
-        LOGGER.info("Préparation de la connexion du client TCP à l'hote " + hostname + " sur le port " + port);
+        LOGGER.info("Préparation de la connexion du connexionTask TCP à l'hote " + hostname + " sur le port " + port);
 
         connector = new NioSocketConnector();
 
@@ -58,11 +61,35 @@ public class MinaTcpClient {
 
         connector.setHandler(tcpClientHandler);
 
-        final ConnectFuture connFuture = connector.connect(new InetSocketAddress(hostname, port));
-        connFuture.awaitUninterruptibly();
-        session = connFuture.getSession();
-        LOGGER.info("Démarrage du client TCP sur l'hote " + hostname + " sur le port " + port);
+        new connexionTask().execute();
+
+//        new Runnable() {
+//            public void run() {
+//                final SocketAddress socketAddress = new InetSocketAddress(hostname, port);
+//                final ConnectFuture connFuture = connector.connect(socketAddress);
+//                connFuture.awaitUninterruptibly();
+//                session = connFuture.getSession();
+//                LOGGER.info("Démarrage du connexionTask TCP sur l'hote " + hostname + " sur le port " + port);
+//            }
+//        };
+
+
     }
+
+    public class connexionTask extends AsyncTask<Void,Void,Void> {
+
+        protected Void doInBackground(Void... Params) {
+
+            final SocketAddress socketAddress = new InetSocketAddress(hostname, port);
+            final ConnectFuture connFuture = connector.connect(socketAddress);
+            connFuture.awaitUninterruptibly();
+            session = connFuture.getSession();
+            LOGGER.info("Démarrage du connexionTask TCP sur l'hote " + hostname + " sur le port " + port);
+            return null;
+        }
+
+    }
+
 
     public void sendMessage(final Object message) {
         LOGGER.debug("Envoi du message " + message);

@@ -24,7 +24,7 @@ public class MinaTcpClientTest {
 
     @Test
     public void messageSent() {
-        final String messageToSend = "Message de test du client: yes ça marche !";
+        final String messageToSend = "Message de test du connexionTask: yes ça marche !";
         client.sendMessage(messageToSend);
     }
 }

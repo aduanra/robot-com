@@ -71,9 +71,8 @@ public class RadioCommandeFragment extends Fragment {
         if(networkInfo != null && networkInfo.isAvailable() && networkInfo.isConnected()) {
             boolean wifi = networkInfo.getType() == ConnectivityManager.TYPE_WIFI;
             boolean mobile = networkInfo.getType() == ConnectivityManager.TYPE_MOBILE;
-            Log.d("NetworkState", "L'interface de connexion active est du Wifi : " + wifi);
-            radioCommandeViewModel.log("L'interface de connexion active est du Wifi : " + wifi);
-            radioCommandeViewModel.log("L'interface de connexion active est du réseau mobile : " + mobile);
+            radioCommandeViewModel.log("Wifi actif : " + wifi);
+            radioCommandeViewModel.log("Réseau mobile actif : " + mobile);
         } else {
             radioCommandeViewModel.log("Pas de connexion réseau...");
             return;

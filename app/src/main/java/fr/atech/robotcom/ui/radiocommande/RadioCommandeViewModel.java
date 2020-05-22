@@ -31,10 +31,10 @@ public class RadioCommandeViewModel extends ViewModel {
     }
 
     public void initTcpCommunication() {
-        // Associe le view model au TCP client handler pour qu'il puisse l'appeler quand des événement réseau surviennent
+        // Associe le view model au TCP connexionTask handler pour qu'il puisse l'appeler quand des événement réseau surviennent
         tcpClientHandler = new RadioCommandeClientHandler(this);
 
-        // Démarre le client TCP
+        // Démarre le connexionTask TCP
         client = new MinaTcpClient(hostname, port, tcpClientHandler);
     }
 

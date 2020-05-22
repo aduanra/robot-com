@@ -36,7 +36,7 @@ public class RobotServerHandler extends IoHandlerAdapter {
         session.write(response);
 
 
-        // // Get all client sessions
+        // // Get all connexionTask sessions
 //		Collection<IoSession> sessions = session.getService().getManagedSessions().values();
         // // send data to all clients
 //		for (IoSession sess : sessions) {
