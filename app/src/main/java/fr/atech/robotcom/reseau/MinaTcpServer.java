@@ -16,19 +16,29 @@ import java.nio.charset.StandardCharsets;
 public class MinaTcpServer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MinaTcpServer.class);
-
     public static final int PORT = 18567;
 
     private NioSocketAcceptor acceptor;
 
-    public MinaTcpServer() throws IOException {
+    private Integer port = MinaTcpServer.PORT;
+
+    public MinaTcpServer(final Integer port,
+                         final RobotServerHandler robotServerHandler) throws IOException {
+
+        if(port!=null) this.port = port;
+        if(robotServerHandler==null) throw new RuntimeException("robotServerHandler ne peut être null");
+
+        startServer(robotServerHandler);
+    }
+
+    private void startServer(final RobotServerHandler robotServerHandler) throws IOException {
         acceptor = new NioSocketAcceptor();
 
         //acceptor.getFilterChain().addLast("logger", new LoggingFilter());
         acceptor.getFilterChain().addLast("codec",
                 new ProtocolCodecFilter(new TextLineCodecFactory(StandardCharsets.UTF_8)));
 
-        acceptor.setHandler(new RobotServerHandler());
+        acceptor.setHandler(robotServerHandler);
 
         acceptor.getSessionConfig().setReadBufferSize(2048);
         acceptor.getSessionConfig().setIdleTime(IdleStatus.BOTH_IDLE, 10);

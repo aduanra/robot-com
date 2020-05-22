@@ -6,9 +6,21 @@ import org.apache.mina.core.session.IoSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import fr.atech.robotcom.ui.robot.RobotViewModel;
+
 public class RobotServerHandler extends IoHandlerAdapter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RobotServerHandler.class);
+
+    private RobotViewModel robotViewModel;
+
+    public RobotServerHandler(RobotViewModel robotViewModel) {
+        this.robotViewModel = robotViewModel;
+    }
+
+    // Pour test
+    RobotServerHandler() {
+    }
 
     @Override
     public void messageReceived(final IoSession session, final Object message) {
