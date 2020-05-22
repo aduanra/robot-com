@@ -26,8 +26,8 @@ public class RadioCommandeClientHandler extends IoHandlerAdapter {
         final String response = "Message bien reçu !";
         session.write(response);
 
-        TextView receivedText = (TextView) findViewById(R.id.text_radiocommande_log);
-        receivedText.setText("Robot: " + receivedText);
+//        TextView receivedText = (TextView) findViewById(R.id.text_radiocommande_log);
+//        receivedText.setText("Robot: " + receivedText);
 
 
         // // Get all client sessions
