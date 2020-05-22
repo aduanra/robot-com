@@ -20,7 +20,7 @@ public class RadioCommandeViewModel extends ViewModel {
         logContent = new MutableLiveData<>();
         logContent.setValue("Ceci est mon log...");
 
-        initTcpCommunication();
+        //initTcpCommunication();
     }
 
     private void initTcpCommunication() {
