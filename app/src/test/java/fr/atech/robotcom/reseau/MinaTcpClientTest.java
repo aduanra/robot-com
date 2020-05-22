@@ -11,8 +11,8 @@ public class MinaTcpClientTest {
 
     @Before
     public void setUp() throws Exception {
-        server = new MinaTcpServer();
-        client = new MinaTcpClient();
+        server = new MinaTcpServer(null, new RobotServerHandler());
+        client = new MinaTcpClient("localhost", null, new RadioCommandeClientHandler());
     }
 
     @After

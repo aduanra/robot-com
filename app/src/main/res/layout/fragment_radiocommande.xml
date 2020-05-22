@@ -7,37 +7,40 @@
         android:layout_height="match_parent"
         tools:context=".ui.radiocommande.RadioCommandeFragment">
 
-    <TextView
-            android:id="@+id/text_radiocommande"
-            android:text="@string/title_radiocommande"
 
-            android:textAlignment="center"
+    <ScrollView
+        android:id="@+id/scroller_rc_log"
+        android:layout_width="fill_parent"
+        android:layout_height="180dp"
 
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="4dp"
 
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/button_rc_bas"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintVertical_bias="0.184"/>
+        android:background="#E0F7FA"
 
-    <TextView
+        android:clipToPadding="false"
+        android:fadeScrollbars="false"
+        android:fillViewport="true"
+
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbarStyle="insideOverlay"
+        android:scrollbars="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
             android:id="@+id/text_radiocommande_log"
-            android:text="..."
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/text_radiocommande"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintVertical_bias="0.033"
-    />
+            android:layout_width="fill_parent"
+
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0"
+            android:text="Log..."
+
+            />
+    </ScrollView>
+
 
     <Button
             android:id="@+id/button_rc_haut"
@@ -45,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            app:layout_constraintTop_toBottomOf="@+id/text_radiocommande_log"
+            app:layout_constraintTop_toBottomOf="@+id/scroller_rc_log"
             app:layout_constraintBottom_toTopOf="@+id/button_rc_bas"
 
             app:layout_constraintStart_toStartOf="parent"
@@ -112,5 +115,8 @@
             app:layout_constraintEnd_toEndOf="parent"
 
     />
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

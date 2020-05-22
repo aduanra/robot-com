@@ -19,19 +19,36 @@ public class MinaTcpClient {
     private IoConnector connector;
     private static IoSession session;
 
-    public MinaTcpClient() {
+    private String hostname;
+    private Integer port = MinaTcpServer.PORT;
+
+    public MinaTcpClient(final String hostname,
+                         final Integer port,
+                         final RadioCommandeClientHandler tcpClientHandler) {
+
+        if(hostname==null) throw new RuntimeException("hostname ne peut être null");
+        this.hostname = hostname;
+        if(port!=null) this.port = port;
+        if(tcpClientHandler==null) throw new RuntimeException("tcpClientHandler ne peut être null");
+
+        connectToServer(hostname, port, tcpClientHandler);
+    }
+
+    private void connectToServer(final String hostname,
+                                 final Integer port,
+                                 final RadioCommandeClientHandler tcpClientHandler) {
         connector = new NioSocketConnector();
 
         //connector.getFilterChain().addLast( "logger", new LoggingFilter() );
         connector.getFilterChain().addLast("codec",
                 new ProtocolCodecFilter(new TextLineCodecFactory(StandardCharsets.UTF_8)));
 
-        connector.setHandler(new RadioCommandeClientHandler());
+        connector.setHandler(tcpClientHandler);
 
-        final ConnectFuture connFuture = connector.connect(new InetSocketAddress("localhost", MinaTcpServer.PORT));
+        final ConnectFuture connFuture = connector.connect(new InetSocketAddress(hostname, port));
         connFuture.awaitUninterruptibly();
         session = connFuture.getSession();
-        LOGGER.info("Démarrage du client TCP sur le port " + MinaTcpServer.PORT);
+        LOGGER.info("Démarrage du client TCP pour l'hote " + hostname + " sur le port " + port);
     }
 
     public void sendMessage(final Object message) {
