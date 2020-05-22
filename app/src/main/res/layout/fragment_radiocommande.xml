@@ -5,8 +5,34 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.radiocommande.RadioCommandeFragment">
+        tools:context=".ui.radiocommande.RadioCommandeFragment"
 
+        android:id="@+id/layout_rc"
+        android:focusableInTouchMode="true"
+    >
+
+    <EditText
+        android:id="@+id/editText_rc_hostname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hostname"
+
+        android:inputType="text"
+
+        app:layout_constraintRight_toLeftOf="@+id/button_rc_connect"
+        app:layout_constraintTop_toTopOf="parent"
+
+        />
+
+    <Button
+        android:id="@+id/button_rc_connect"
+        android:text="@string/connexion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editText_rc_hostname"
+        />
 
     <ScrollView
         android:id="@+id/scroller_rc_log"
@@ -26,9 +52,12 @@
         android:scrollbarAlwaysDrawVerticalTrack="true"
         android:scrollbarStyle="insideOverlay"
         android:scrollbars="vertical"
+
+        app:layout_constraintTop_toBottomOf="@+id/button_rc_connect"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        >
 
         <TextView
             android:id="@+id/text_radiocommande_log"
@@ -40,6 +69,7 @@
 
             />
     </ScrollView>
+
 
 
     <Button

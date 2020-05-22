@@ -30,20 +30,24 @@ public class RadioCommandeClientHandler extends IoHandlerAdapter {
         LOGGER.debug("Reception du message: " + message);
         radioCommandeViewModel.log("Reception du message: " + message);
 
-        String str = message.toString();
-        if (str.trim().equalsIgnoreCase("quit")) {
+        final String serverResponse = message.toString().trim();
+        radioCommandeViewModel.setLastServerResponse(serverResponse);
+
+        if (serverResponse.equalsIgnoreCase("quit")) {
             session.closeOnFlush();
             return;
         }
 
-        final String response = "Message bien reçu !";
-        session.write(response);
+
+
+//        final String response = "Message bien reçu !";
+//        session.write(response);
 
 //        TextView receivedText = (TextView) findViewById(R.id.text_radiocommande_log);
 //        receivedText.setText("Robot: " + receivedText);
 
 
-        // // Get all client sessions
+        // // Get all connexionTask sessions
 //		Collection<IoSession> sessions = session.getService().getManagedSessions().values();
         // // send data to all clients
 //		for (IoSession sess : sessions) {

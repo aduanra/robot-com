@@ -3,6 +3,8 @@
 
     <!-- Ecran Radiocommande -->
     <string name="title_radiocommande">Radiocommande</string>
+    <string name="hostname">192.168.1.15</string>
+    <string name="connexion">Connexion</string>
     <string name="haut">Haut</string>
     <string name="bas">Bas</string>
     <string name="gauche">Gauche</string>
@@ -13,10 +15,11 @@
     <string name="title_configuration">Configuration</string>
     <string name="switch_cote_robot">Côté robot</string>
     <string name="label_ip_robot">IP du robot</string>
-    <string name="bouton_enregistrer">Enregistrer</string>
+    <string name="button_save">Enregistrer</string>
 
     <!-- Ecran Robot -->
     <string name="title_infos_robot">Robot</string>
+    <string name="button_start_server">Démarrer le serveur</string>
     <string name="label_log">Log des commandes</string>
 
 
