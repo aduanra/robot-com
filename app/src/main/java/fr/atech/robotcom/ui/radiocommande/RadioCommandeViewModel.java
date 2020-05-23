@@ -53,7 +53,7 @@ public class RadioCommandeViewModel extends ViewModel implements Loggable {
 
     // Envoie une commmande au serveur
     public void sendCommand(final String command){
-        client.sendMessage(command);
+        client.sendMessage(command.trim());
     }
 
     public LiveData<String> getLogContent() {
