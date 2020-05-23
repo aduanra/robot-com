@@ -22,7 +22,7 @@ public class RadioCommandeViewModel extends ViewModel {
 
     private MinaTcpClient client;
     private RadioCommandeClientHandler tcpClientHandler;
-    private String hostname = NetworkUtils.getIPAddress(true);
+    //private String hostname = NetworkUtils.getIPAddress(true);
     private Integer port = null;
 
     private MutableLiveData<String> logContent = new MutableLiveData<>();
@@ -33,7 +33,7 @@ public class RadioCommandeViewModel extends ViewModel {
 
     }
 
-    public void initTcpCommunication() {
+    public void initTcpCommunication(final String hostname) {
 
         if(client!=null) return; // Déjà connecté
 

@@ -3,11 +3,11 @@ package fr.atech.robotcom.ui.radiocommande;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -15,27 +15,29 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
-import java.util.Random;
-
 import fr.atech.robotcom.R;
 
 import static android.content.Context.CONNECTIVITY_SERVICE;
-import static androidx.core.content.ContextCompat.getSystemService;
 
 public class RadioCommandeFragment extends Fragment {
 
     private RadioCommandeViewModel radioCommandeViewModel;
 
+    // Connexion
+    private EditText hostnameEditText;
+    private Button connectButton;
+    private View.OnClickListener connectButtonOnClickListener = v -> connectButtonClicked();
+
+
     // Logs
     private ScrollView logScroller;
     private TextView logText;
 
-    // Boutons
+    // Commandes
     private Button stopButton;
     private View.OnClickListener stopButtonOnClickListener = v -> stopButtonClicked();
 
-    private Button connectButton;
-    private View.OnClickListener connectButtonOnClickListener = v -> connectButtonClicked();
+    private View view;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container,
@@ -45,17 +47,21 @@ public class RadioCommandeFragment extends Fragment {
         radioCommandeViewModel = ViewModelProviders.of(this).get(RadioCommandeViewModel.class);
 
         // Affiche le fragment
-        View root = inflater.inflate(R.layout.fragment_radiocommande, container, false);
+        view = inflater.inflate(R.layout.fragment_radiocommande, container, false);
 
-        initLogDisplay(root);
+        // Connexion
+        connectButton =  view.findViewById(R.id.button_rc_connect);
+        connectButton.setOnClickListener(connectButtonOnClickListener);
+        hostnameEditText = view.findViewById(R.id.editText_rc_hostname);
 
-        stopButton = root.findViewById(R.id.button_rc_stop);
+        // Commandes
+        stopButton = view.findViewById(R.id.button_rc_stop);
         stopButton.setOnClickListener(stopButtonOnClickListener);
 
-        connectButton =  root.findViewById(R.id.button_rc_connect);
-        connectButton.setOnClickListener(connectButtonOnClickListener);
+        // Log
+        initLogDisplay();
 
-        return root;
+        return view;
     }
 
 
@@ -64,7 +70,27 @@ public class RadioCommandeFragment extends Fragment {
     }
 
     private void connectButtonClicked() {
+        final String hostname = hostnameEditText.getText().toString();
+        if (!isHostnameCorrect(hostname)) return;
+        if (!hasNetworkConnectivity()) return;
 
+        hostnameEditText.setSelected(false);
+        hostnameEditText.clearFocus();
+        view.findViewById(R.id.layout_rc).requestFocus();
+
+        radioCommandeViewModel.initTcpCommunication(hostname.trim());
+    }
+
+
+    private boolean isHostnameCorrect(String hostname) {
+        if(hostname==null || hostname.trim()==""){
+            radioCommandeViewModel.log("Saisir une adresse IP");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean hasNetworkConnectivity() {
         final ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
         final NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 
@@ -73,18 +99,16 @@ public class RadioCommandeFragment extends Fragment {
             boolean mobile = networkInfo.getType() == ConnectivityManager.TYPE_MOBILE;
             radioCommandeViewModel.log("Wifi actif : " + wifi);
             radioCommandeViewModel.log("Réseau mobile actif : " + mobile);
-        } else {
-            radioCommandeViewModel.log("Pas de connexion réseau...");
-            return;
+            return true;
         }
-
-        radioCommandeViewModel.initTcpCommunication();
+        radioCommandeViewModel.log("Pas de connexion réseau...");
+        return false;
     }
 
-    private void initLogDisplay(View root) {
+    private void initLogDisplay() {
         // Récupère la zone de log
-        logText = root.findViewById(R.id.text_radiocommande_log);
-        logScroller = root.findViewById(R.id.scroller_rc_log);
+        logText = view.findViewById(R.id.text_radiocommande_log);
+        logScroller = view.findViewById(R.id.scroller_rc_log);
 
         // Met à jour la zone de log avec le log du ViewModel quand il change
         radioCommandeViewModel.getLogContent().observe(getViewLifecycleOwner(), s -> updateLog(s));
