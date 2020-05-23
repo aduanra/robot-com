@@ -39,6 +39,10 @@ public class RadioCommandeFragment extends Fragment {
     private Button stopButton;
     private View.OnClickListener stopButtonOnClickListener = v -> stopButtonClicked();
 
+    private Button sendButton;
+    private View.OnClickListener sendButtonOnClickListener = v -> sendButtonClicked();
+    private EditText commandEditText;
+
     private View view;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -52,13 +56,17 @@ public class RadioCommandeFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_radiocommande, container, false);
 
         // Connexion
-        connectButton =  (Button) view.findViewById(R.id.button_rc_connect);
+        connectButton =  view.findViewById(R.id.button_rc_connect);
         connectButton.setOnClickListener(connectButtonOnClickListener);
-        hostnameEditText = (EditText) view.findViewById(R.id.editText_rc_hostname);
+        hostnameEditText = view.findViewById(R.id.editText_rc_hostname);
 
         // Commandes
-        stopButton = (Button) view.findViewById(R.id.button_rc_stop);
+        stopButton = view.findViewById(R.id.button_rc_stop);
         stopButton.setOnClickListener(stopButtonOnClickListener);
+
+        sendButton = view.findViewById(R.id.button_rc_send);
+        sendButton.setOnClickListener(sendButtonOnClickListener);
+        commandEditText = view.findViewById(R.id.editText_rc_command);
 
         // Log
         initLogDisplay();
@@ -69,6 +77,10 @@ public class RadioCommandeFragment extends Fragment {
 
     private void stopButtonClicked() {
         radioCommandeViewModel.sendCommand("stop");
+    }
+
+    private void sendButtonClicked() {
+        radioCommandeViewModel.sendCommand(commandEditText.getText().toString());
     }
 
     private void connectButtonClicked() {

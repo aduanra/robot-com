@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -18,10 +18,6 @@
         android:text="@string/hostname"
 
         android:inputType="text"
-
-        app:layout_constraintRight_toLeftOf="@+id/button_rc_connect"
-        app:layout_constraintTop_toTopOf="parent"
-
         />
 
     <Button
@@ -30,34 +26,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/editText_rc_hostname"
+        android:layout_toRightOf="@id/editText_rc_hostname"
         />
 
     <ScrollView
         android:id="@+id/scroller_rc_log"
         android:layout_width="fill_parent"
-        android:layout_height="180dp"
+        android:layout_height="150dp"
 
+        android:layout_below="@+id/button_rc_connect"
         android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
+
         android:layout_marginEnd="4dp"
 
         android:background="#E0F7FA"
-
         android:clipToPadding="false"
         android:fadeScrollbars="false"
-        android:fillViewport="true"
 
+        android:fillViewport="true"
         android:scrollbarAlwaysDrawVerticalTrack="true"
         android:scrollbarStyle="insideOverlay"
-        android:scrollbars="vertical"
 
-        app:layout_constraintTop_toBottomOf="@+id/button_rc_connect"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        >
+        android:scrollbars="vertical">
 
         <TextView
             android:id="@+id/text_radiocommande_log"
@@ -70,83 +61,86 @@
             />
     </ScrollView>
 
+    <EditText
+        android:id="@+id/editText_rc_command"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@+id/scroller_rc_log"
+
+        android:inputType="text"
+
+        android:text="fwd-4150" />
+
+    <Button
+        android:id="@+id/button_rc_send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/scroller_rc_log"
+
+        android:layout_toRightOf="@+id/editText_rc_command"
+        android:text="@string/envoi"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
 
     <Button
-            android:id="@+id/button_rc_haut"
-            android:text="@string/haut"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        android:id="@+id/button_rc_haut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/haut"
 
-            app:layout_constraintTop_toBottomOf="@+id/scroller_rc_log"
-            app:layout_constraintBottom_toTopOf="@+id/button_rc_bas"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
 
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-
-    />
+        android:layout_toRightOf="@+id/editText_rc_command"
+        android:layout_below="@+id/editText_rc_command"
+        />
 
     <Button
-            android:id="@+id/button_rc_gauche"
-            android:text="@string/gauche"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        android:id="@+id/button_rc_gauche"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/gauche"
 
-            app:layout_constraintTop_toBottomOf="@+id/button_rc_haut"
-            app:layout_constraintBottom_toTopOf="@+id/button_rc_bas"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
 
-            app:layout_constraintRight_toLeftOf="@+id/button_rc_stop"
-
-            app:layout_constraintStart_toStartOf="parent"
-
-            app:layout_constraintHorizontal_bias="0.0"/>
+        android:layout_below="@+id/button_rc_haut"
+        android:layout_toLeftOf="@+id/button_rc_stop"
+        />
 
     <Button
-            android:id="@+id/button_rc_stop"
-            android:text="@string/stop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        android:id="@+id/button_rc_stop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/stop"
 
-            app:layout_constraintTop_toBottomOf="@+id/button_rc_haut"
-            app:layout_constraintBottom_toTopOf="@+id/button_rc_bas"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
 
-            app:layout_constraintLeft_toRightOf="@+id/button_rc_gauche"
-
-            app:layout_constraintStart_toStartOf="@+id/button_rc_haut"
-            app:layout_constraintEnd_toEndOf="@+id/button_rc_haut"
-
-    />
+        android:layout_toRightOf="@+id/editText_rc_command"
+        android:layout_below="@+id/button_rc_haut"
+        />
 
     <Button
-            android:id="@+id/button_rc_droite"
-            android:text="@string/droite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        android:id="@+id/button_rc_droite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/droite"
 
-            app:layout_constraintTop_toBottomOf="@+id/button_rc_haut"
-            app:layout_constraintBottom_toTopOf="@+id/button_rc_bas"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
 
-            app:layout_constraintLeft_toRightOf="@+id/button_rc_stop"
-            app:layout_constraintRight_toLeftOf="parent"
-
-            app:layout_constraintEnd_toEndOf="parent"
-
-    />
+        android:layout_toRightOf="@+id/button_rc_stop"
+        android:layout_below="@+id/button_rc_haut"
+        />
 
     <Button
-            android:id="@+id/button_rc_bas"
-            android:text="@string/bas"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        android:id="@+id/button_rc_bas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bas"
 
-            app:layout_constraintTop_toBottomOf="@+id/button_rc_haut"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
 
-    />
+        android:layout_toRightOf="@+id/button_rc_gauche"
+        android:layout_below="@+id/button_rc_stop"
+     />
 
-
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
