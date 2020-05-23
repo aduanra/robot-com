@@ -15,10 +15,11 @@
     <string name="title_configuration">Configuration</string>
     <string name="switch_cote_robot">Côté robot</string>
     <string name="label_ip_robot">IP du robot</string>
-    <string name="bouton_enregistrer">Enregistrer</string>
+    <string name="button_save">Enregistrer</string>
 
     <!-- Ecran Robot -->
     <string name="title_infos_robot">Robot</string>
+    <string name="button_start_server">Démarrer le serveur</string>
     <string name="label_log">Log des commandes</string>
 
 

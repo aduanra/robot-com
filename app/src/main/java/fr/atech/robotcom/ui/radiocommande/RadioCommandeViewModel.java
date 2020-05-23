@@ -12,21 +12,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import fr.atech.robotcom.reseau.MinaTcpClient;
+import fr.atech.robotcom.reseau.MinaTcpServer;
 import fr.atech.robotcom.reseau.NetworkUtils;
 import fr.atech.robotcom.reseau.RadioCommandeClientHandler;
+import fr.atech.robotcom.ui.Loggable;
 
 
-public class RadioCommandeViewModel extends ViewModel {
+public class RadioCommandeViewModel extends ViewModel implements Loggable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RadioCommandeViewModel.class);
 
     private MinaTcpClient client;
     private RadioCommandeClientHandler tcpClientHandler;
-    //private String hostname = NetworkUtils.getIPAddress(true);
-    private Integer port = null;
+    private Integer port = MinaTcpServer.PORT;
 
     private MutableLiveData<String> logContent = new MutableLiveData<>();
-
     private MutableLiveData<String> lastServerResponse = new MutableLiveData<>();
 
     public RadioCommandeViewModel() {
@@ -37,7 +37,7 @@ public class RadioCommandeViewModel extends ViewModel {
 
         if(client!=null) return; // Déjà connecté
 
-        // Associe le view model au TCP connexionTask handler pour qu'il puisse l'appeler quand des événement réseau surviennent
+        // Associe le view model au TCP client handler pour qu'il puisse l'appeler quand des événement réseau surviennent
         tcpClientHandler = new RadioCommandeClientHandler(this);
 
         // Démarre la connexion TCP
@@ -46,6 +46,7 @@ public class RadioCommandeViewModel extends ViewModel {
     }
 
     // Ajoute une ligne au log de la radio commande
+    @Override
     public void log(final String logToDisplay) {
         LOGGER.info("Log rc: " + logToDisplay);
         logContent.postValue(logContent.getValue() + "\n" + logToDisplay);
@@ -61,7 +62,7 @@ public class RadioCommandeViewModel extends ViewModel {
     }
 
     public void setLastServerResponse(final String serverResponse) {
-        this.lastServerResponse = lastServerResponse;
+        this.lastServerResponse.postValue(serverResponse);
     }
 
     public MutableLiveData<String> getLastServerResponse() {

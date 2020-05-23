@@ -30,10 +30,10 @@ public class RadioCommandeClientHandler extends IoHandlerAdapter {
         LOGGER.debug("Reception du message: " + message);
         radioCommandeViewModel.log("Reception du message: " + message);
 
-        final String serverResponse = message.toString();
+        final String serverResponse = message.toString().trim();
         radioCommandeViewModel.setLastServerResponse(serverResponse);
 
-        if (serverResponse.trim().equalsIgnoreCase("quit")) {
+        if (serverResponse.equalsIgnoreCase("quit")) {
             session.closeOnFlush();
             return;
         }

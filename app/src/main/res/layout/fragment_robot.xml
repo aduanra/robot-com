@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.robot.RobotFragment">
+
+    <Button
+        android:id="@+id/button_robot_connect"
+        android:text="@string/button_start_server"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        />
+
+    <TextView
+        android:id="@+id/text_robot_log_title"
+        android:text= "@string/label_log"
+
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button_robot_connect"
+       />
+
+    <ScrollView
+        android:id="@+id/scroller_robot_log"
+        android:layout_width="fill_parent"
+        android:layout_height="300dp"
+
+        android:layout_below="@id/text_robot_log_title"
+
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="4dp"
+
+        android:background="#E0F7FA"
+
+        android:clipToPadding="false"
+        android:fadeScrollbars="false"
+        android:fillViewport="true"
+
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbarStyle="insideOverlay"
+        android:scrollbars="vertical"
+
+        >
+
+        <TextView
+            android:id="@+id/text_robot_log"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0"
+
+            android:text="Log..."
+
+            android:layout_below="@id/text_robot_log_title"
+
+            />
+    </ScrollView>
+
+</RelativeLayout>

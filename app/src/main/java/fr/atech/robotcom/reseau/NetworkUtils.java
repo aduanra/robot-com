@@ -1,11 +1,36 @@
 package fr.atech.robotcom.reseau;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Collections;
 import java.util.List;
 
+import fr.atech.robotcom.ui.Loggable;
+
+import static android.content.Context.CONNECTIVITY_SERVICE;
+
 public class NetworkUtils {
+
+
+    public static boolean hasNetworkConnectivity(final Loggable view, final Context context) {
+        final ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(CONNECTIVITY_SERVICE);
+        final NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        if(networkInfo != null && networkInfo.isAvailable() && networkInfo.isConnected()) {
+            boolean wifi = networkInfo.getType() == ConnectivityManager.TYPE_WIFI;
+            boolean mobile = networkInfo.getType() == ConnectivityManager.TYPE_MOBILE;
+            view.log("Wifi actif : " + wifi);
+            view.log("Réseau mobile actif : " + mobile);
+            return true;
+        }
+        view.log("Pas de connexion réseau...");
+        return false;
+    }
+
 
     /**
      * Returns MAC address of the given interface name.

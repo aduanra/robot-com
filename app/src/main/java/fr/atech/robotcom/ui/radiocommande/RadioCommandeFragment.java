@@ -16,8 +16,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import fr.atech.robotcom.R;
+import fr.atech.robotcom.ui.Loggable;
 
 import static android.content.Context.CONNECTIVITY_SERVICE;
+import static fr.atech.robotcom.reseau.NetworkUtils.hasNetworkConnectivity;
 
 public class RadioCommandeFragment extends Fragment {
 
@@ -72,7 +74,7 @@ public class RadioCommandeFragment extends Fragment {
     private void connectButtonClicked() {
         final String hostname = hostnameEditText.getText().toString();
         if (!isHostnameCorrect(hostname)) return;
-        if (!hasNetworkConnectivity()) return;
+        if (!hasNetworkConnectivity(radioCommandeViewModel, getActivity().getApplicationContext())) return;
 
         hostnameEditText.setSelected(false);
         hostnameEditText.clearFocus();
@@ -90,20 +92,6 @@ public class RadioCommandeFragment extends Fragment {
         return true;
     }
 
-    private boolean hasNetworkConnectivity() {
-        final ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
-        final NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-
-        if(networkInfo != null && networkInfo.isAvailable() && networkInfo.isConnected()) {
-            boolean wifi = networkInfo.getType() == ConnectivityManager.TYPE_WIFI;
-            boolean mobile = networkInfo.getType() == ConnectivityManager.TYPE_MOBILE;
-            radioCommandeViewModel.log("Wifi actif : " + wifi);
-            radioCommandeViewModel.log("Réseau mobile actif : " + mobile);
-            return true;
-        }
-        radioCommandeViewModel.log("Pas de connexion réseau...");
-        return false;
-    }
 
     private void initLogDisplay() {
         // Récupère la zone de log
