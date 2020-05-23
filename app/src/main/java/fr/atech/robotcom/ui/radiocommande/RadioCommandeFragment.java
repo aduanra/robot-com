@@ -52,12 +52,12 @@ public class RadioCommandeFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_radiocommande, container, false);
 
         // Connexion
-        connectButton =  view.findViewById(R.id.button_rc_connect);
+        connectButton =  (Button) view.findViewById(R.id.button_rc_connect);
         connectButton.setOnClickListener(connectButtonOnClickListener);
-        hostnameEditText = view.findViewById(R.id.editText_rc_hostname);
+        hostnameEditText = (EditText) view.findViewById(R.id.editText_rc_hostname);
 
         // Commandes
-        stopButton = view.findViewById(R.id.button_rc_stop);
+        stopButton = (Button) view.findViewById(R.id.button_rc_stop);
         stopButton.setOnClickListener(stopButtonOnClickListener);
 
         // Log
@@ -82,7 +82,6 @@ public class RadioCommandeFragment extends Fragment {
 
         radioCommandeViewModel.initTcpCommunication(hostname.trim());
     }
-
 
     private boolean isHostnameCorrect(String hostname) {
         if(hostname==null || hostname.trim()==""){

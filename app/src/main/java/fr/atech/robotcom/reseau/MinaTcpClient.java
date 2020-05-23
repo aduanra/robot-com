@@ -17,6 +17,8 @@ import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.nio.charset.StandardCharsets;
 
+import fr.atech.robotcom.ui.Loggable;
+
 public class MinaTcpClient {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MinaTcpClient.class);
@@ -26,24 +28,25 @@ public class MinaTcpClient {
 
     private String hostname;
     private Integer port = MinaTcpServer.PORT;
+    private boolean isConnected = false;
+
+    private final Loggable loggable;
 
     public MinaTcpClient(final String hostname,
                          final Integer port,
-                         final RadioCommandeClientHandler tcpClientHandler) {
+                         final RadioCommandeClientHandler tcpClientHandler,
+                         final Loggable loggable) {
 
         if(hostname==null) throw new RuntimeException("hostname ne peut être null");
         this.hostname = hostname;
         if(port!=null) this.port = port;
         if(tcpClientHandler==null) throw new RuntimeException("tcpClientHandler ne peut être null");
+        if(loggable==null) throw new RuntimeException("loggable ne peut être null");
+
+        this.loggable = loggable;
 
         // TEMP: créé le serveur
         // TODO: cf sur la connectivité réseau: https://openclassrooms.com/fr/courses/2023346-creez-des-applications-pour-android/2028130-la-connectivite-reseau
-
-        try{
-            new MinaTcpServer(this.port, new RobotServerHandler());
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
 
         connectToServer(hostname, this.port, tcpClientHandler);
     }
@@ -51,7 +54,7 @@ public class MinaTcpClient {
     private void connectToServer(final String hostname,
                                  final Integer port,
                                  final RadioCommandeClientHandler tcpClientHandler) {
-        LOGGER.info("Préparation de la connexion du connexionTask TCP à l'hote " + hostname + " sur le port " + port);
+        log("Préparation de la connexion TCP à l'hote " + hostname + " sur le port " + port);
 
         connector = new NioSocketConnector();
 
@@ -62,18 +65,6 @@ public class MinaTcpClient {
         connector.setHandler(tcpClientHandler);
 
         new connexionTask().execute();
-
-//        new Runnable() {
-//            public void run() {
-//                final SocketAddress socketAddress = new InetSocketAddress(hostname, port);
-//                final ConnectFuture connFuture = connector.connect(socketAddress);
-//                connFuture.awaitUninterruptibly();
-//                session = connFuture.getSession();
-//                LOGGER.info("Démarrage du connexionTask TCP sur l'hote " + hostname + " sur le port " + port);
-//            }
-//        };
-
-
     }
 
     public class connexionTask extends AsyncTask<Void,Void,Void> {
@@ -82,8 +73,16 @@ public class MinaTcpClient {
             final SocketAddress socketAddress = new InetSocketAddress(hostname, port);
             final ConnectFuture connFuture = connector.connect(socketAddress);
             connFuture.awaitUninterruptibly();
-            session = connFuture.getSession();
-            LOGGER.info("Démarrage du connexionTask TCP sur l'hote " + hostname + " sur le port " + port);
+
+            try {
+                session = connFuture.getSession();
+                isConnected = true;
+                log("Connecté à " + hostname + " sur le port " + port);
+
+            } catch (Exception e) {
+                loggable.log("Connexion impossible à l'hote " + hostname + " sur le port " + port + ": " + e.getCause().getMessage());
+                LOGGER.error("Connexion impossible à l'hote " + hostname + " sur le port " + port, e);
+            }
             return null;
         }
 
@@ -97,8 +96,19 @@ public class MinaTcpClient {
 
     public void disconnect() {
         // Close the session, after all threads have finished processing
-        LOGGER.info("Deconnexion");
+        log("Deconnexion");
         this.connector.dispose(true);
+        isConnected = false;
     }
+
+    public boolean isConnected() {
+        return isConnected;
+    }
+
+    private void log(final String logMessage) {
+        LOGGER.info(logMessage);
+        loggable.log(logMessage);
+    }
+
 
 }

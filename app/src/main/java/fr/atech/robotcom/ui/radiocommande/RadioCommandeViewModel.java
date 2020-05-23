@@ -34,15 +34,14 @@ public class RadioCommandeViewModel extends ViewModel implements Loggable {
     }
 
     public void initTcpCommunication(final String hostname) {
-
         if(client!=null) return; // Déjà connecté
 
         // Associe le view model au TCP client handler pour qu'il puisse l'appeler quand des événement réseau surviennent
         tcpClientHandler = new RadioCommandeClientHandler(this);
 
         // Démarre la connexion TCP
-        client = new MinaTcpClient(hostname, port, tcpClientHandler);
-        log("Connecté à " + hostname + ":" + port);
+        log("IP du client : " + NetworkUtils.getIPAddress(true));
+        client = new MinaTcpClient(hostname, port, tcpClientHandler, this);
     }
 
     // Ajoute une ligne au log de la radio commande

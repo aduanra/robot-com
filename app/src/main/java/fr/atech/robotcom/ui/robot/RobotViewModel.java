@@ -44,7 +44,9 @@ public class RobotViewModel extends ViewModel implements Loggable {
             server = new MinaTcpServer(null, tcpServerHandler);
 
         } catch (IOException e) {
-            e.printStackTrace();
+            log("Echec de démarrage du serveur sur le port " + port + ": " + e.getCause().getMessage());
+            LOGGER.error("Echec de démarrage du serveur sur le port " + port, e);
+            return;
         }
 
         log("Serveur démarré sur " + NetworkUtils.getIPAddress(true) + ":" + port);
